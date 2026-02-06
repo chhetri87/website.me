@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dipesh Bham | Founder & Developer</title>
 <link rel="icon" href="img/Red and Beige Vintage Bold Typographic Beauty Salon Logo.png">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script type="application/ld+json">
           {
           "@context":"https://schema.org",
@@ -456,6 +457,12 @@ header.scrolled {
     color: var(--text-muted);
     margin-bottom: 30px;
 }
+ /* --- CAPTCHA & DISABLED BUTTON STYLES (NEW) --- */
+.cf-turnstile {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
 
 /* --- FOOTER & SOCIALS --- */
 footer {
@@ -557,6 +564,7 @@ footer p {
         max-width: 100%;
         margin-bottom: 20px;
     }
+          
 }
 </style>
 </head>
@@ -750,7 +758,10 @@ footer p {
             <i class="fas fa-paper-plane"></i>
             <h3>Let's work together</h3>
             <p>Have a project in mind or want to discuss innovation? Send me an email.</p>
-            <a href="mailto:reachme@dipeshbham.com.np" class="btn">Send Email</a>
+          <div class="cf-turnstile" 
+          data-sitekey="0x4AAAAAACYYj_SfgwxB7LT8" 
+          data-callback="enableMailButton"></div>
+          <button id="mailBtn" class="btn" disabled onclick="sendEmail()">Send Email</button>
         </div>
     </div>
 </section>
@@ -769,6 +780,18 @@ footer p {
 </footer>
 
 <script>
+// --- 3. NEW SCRIPT FOR CAPTCHA HANDLING ---
+function enableMailButton(token) {
+    // Captcha pass bhaye pachi button enable garne
+    const btn = document.getElementById("mailBtn");
+    btn.disabled = false;
+    btn.innerHTML = "Send Email <i class='fas fa-check'></i>";
+}
+
+function sendEmail() {
+    // Tapaiko email address
+    window.location.href = "mailto:reachme@dipeshbham.com.np";
+}
 // --- 1. NAVBAR SCROLL EFFECT ---
 const header = document.querySelector('header');
 window.addEventListener('scroll', () => {
@@ -883,6 +906,7 @@ document.onkeydown = (e) => {
 </body>
 
 </html>
+
 
 
 
