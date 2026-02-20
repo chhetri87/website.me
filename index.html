@@ -11,8 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dipesh Bham | Founder & Developer</title>
     <link rel="icon" href="img/Red and Beige Vintage Bold Typographic Beauty Salon Logo.png">
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
     <script type="application/ld+json">
           {
           "@context":"https://schema.org",
@@ -957,8 +956,7 @@
                         <input type="text" name="Subject" placeholder="Subject">
                     </div>
                     <textarea name="Message" cols="30" rows="6" placeholder="Your Message" required></textarea>
-                    <div class="h-captcha" data-sitekey="b1862f02-625a-4be2-94da-961affc8c8fa"
-                        style="margin-bottom: 20px;"></div>
+
                     <input type="submit" value="Send Message" class="btn">
                 </form>
             </div>
@@ -1017,14 +1015,6 @@
                     submitBtn.value = 'Sending...';
                     submitBtn.disabled = true;
 
-                    // Validate hCaptcha
-                    const hcaptchaResponse = form.querySelector('[name="h-captcha-response"]');
-                    if (!hcaptchaResponse || !hcaptchaResponse.value) {
-                        showToast('error', 'CAPTCHA Required', 'Please complete the CAPTCHA verification.');
-                        submitBtn.value = originalVal;
-                        submitBtn.disabled = false;
-                        return;
-                    }
 
                     const data = new FormData(form);
                     data.append('botcheck', '');
