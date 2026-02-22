@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -550,65 +549,77 @@
             }
         }
 
-        /* --- POPUP NOTIFICATION --- */
-        #toast {
+        /* The dark background overlay */
+        .offer-backdrop {
+            display: none;
+            /* Hidden by default; JavaScript reveals it */
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 24px;
-            border-radius: 12px;
-            background: rgba(15, 23, 42, 0.92);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(12px);
-            color: var(--text-color);
-            font-size: 0.95rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             z-index: 9999;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            max-width: 340px;
+            justify-content: center;
+            align-items: center;
         }
 
-        #toast.show {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
+        /* The container holding the image */
+        .offer-box {
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            background: transparent;
+            animation: scaleInModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        #toast.success {
-            border-color: #22c55e;
-        }
-
-        #toast.error {
-            border-color: #ef4444;
-        }
-
-        #toast .toast-icon {
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-
-        #toast.success .toast-icon {
-            color: #22c55e;
-        }
-
-        #toast.error .toast-icon {
-            color: #ef4444;
-        }
-
-        #toast .toast-text strong {
+        /* The main promotional image */
+        .offer-graphic {
+            width: 100%;
+            height: auto;
             display: block;
-            margin-bottom: 3px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        #toast .toast-text span {
-            color: var(--text-muted);
-            font-size: 0.85rem;
+        /* The blue circular close button */
+        .offer-dismiss-btn {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background-color: #0084ff;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding-bottom: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .offer-dismiss-btn:hover {
+            background-color: #0066cc;
+        }
+
+        /* Entrance animation */
+        @keyframes scaleInModal {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* --- FOOTER & SOCIALS --- */
@@ -726,6 +737,227 @@
             }
 
         }
+
+        /* --- WELCOME POPUP --- */
+        #welcome-popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        #welcome-popup-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #welcome-popup {
+            background: linear-gradient(145deg, #ffffff 0%, #e8f4fd 100%);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transform: scale(0.85) translateY(30px);
+            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            opacity: 0;
+            position: relative;
+        }
+
+        #welcome-popup-overlay.active #welcome-popup {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .popup-close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.12);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease, transform 0.2s ease;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .popup-close-btn:hover {
+            background: rgba(0, 0, 0, 0.25);
+            transform: scale(1.1);
+        }
+
+        .popup-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1398cc 100%);
+            padding: 35px 30px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-header::before {
+            content: '</';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.06);
+            font-family: monospace;
+        }
+
+        .popup-header::after {
+            content: '>';
+            position: absolute;
+            bottom: 5px;
+            right: 20px;
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.06);
+            font-family: monospace;
+        }
+
+        .popup-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #1398cc, #0f172a);
+            border-radius: 50%;
+            margin: 0 auto 18px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .popup-header h2 span {
+            color: #7dd3fc;
+        }
+
+        .popup-tagline {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.5px;
+        }
+
+        .popup-divider {
+            width: 50px;
+            height: 3px;
+            background: #1398cc;
+            border-radius: 2px;
+            margin: 12px auto 0;
+        }
+
+        .popup-body {
+            padding: 28px 30px;
+            color: #1e293b;
+        }
+
+        .popup-body p {
+            font-size: 0.95rem;
+            color: #475569;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .popup-highlights {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .popup-tag {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid #bae6fd;
+        }
+
+        .popup-cta-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1398cc, #0369a1);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(19, 152, 204, 0.4);
+            letter-spacing: 0.3px;
+        }
+
+        .popup-cta-btn:hover {
+            background: linear-gradient(135deg, #0ea5e9, #1d4ed8);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(19, 152, 204, 0.55);
+        }
+
+        .popup-footer-note {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .popup-footer-note a {
+            color: #1398cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            #welcome-popup {
+                max-width: 100%;
+                border-radius: 16px;
+            }
+
+            .popup-header {
+                padding: 28px 20px 22px;
+            }
+
+            .popup-body {
+                padding: 22px 20px;
+            }
+
+            .popup-header h2 {
+                font-size: 1.4rem;
+            }
+        }
     </style>
 </head>
 
@@ -737,6 +969,18 @@
         <div class="bg-slide" style="background-image: url('img/bg3.png');"></div>
     </div>
     <div class="overlay"></div>
+
+    <div id="welcome-offer-backdrop" class="offer-backdrop">
+        <div id="welcome-offer-box" class="offer-box">
+
+            <button class="offer-dismiss-btn" id="welcome-offer-dismiss" aria-label="Close modal">&times;</button>
+
+            <a href="#contact">
+                <img src="img/509851096_17849536728493890_8923058708485833373_n.jpg" alt="Offer" class="offer-graphic">
+            </a>
+
+        </div>
+    </div>
 
     <header id="navbar">
         <div class="container nav-container">
@@ -987,6 +1231,32 @@
     </footer>
 
     <script>
+        // --- POPUP NOTIFICATION ---
+        document.addEventListener("DOMContentLoaded", function () {
+            // Using the new IDs
+            const backdrop = document.getElementById("welcome-offer-backdrop");
+            const dismissBtn = document.getElementById("welcome-offer-dismiss");
+
+            // Check if the user has already seen this during their session
+            if (!sessionStorage.getItem("hasSeenWelcomeOffer")) {
+                backdrop.style.display = "flex";
+            }
+
+            // Close button click event
+            dismissBtn.addEventListener("click", function () {
+                backdrop.style.display = "none";
+                sessionStorage.setItem("hasSeenWelcomeOffer", "true");
+            });
+
+            // Close if clicking outside the image
+            backdrop.addEventListener("click", function (event) {
+                if (event.target === backdrop) {
+                    backdrop.style.display = "none";
+                    sessionStorage.setItem("hasSeenWelcomeOffer", "true");
+                }
+            });
+        });
+
         // --- CONTACT FORM SUBMIT ---
         (function () {
             const form = document.querySelector('#contact form');
@@ -1152,8 +1422,43 @@
                 return false;
         };
 
+        // --- AUTO WELCOME POPUP ---
+        (function () {
+            const overlay = document.getElementById('welcome-popup-overlay');
+            const closeBtn = document.getElementById('popup-close');
+            const exploreBtn = document.getElementById('popup-explore-btn');
+
+            function openPopup() {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closePopup() {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Show popup 1 second after page loads
+            setTimeout(openPopup, 1000);
+
+            // Close on X button click
+            closeBtn.addEventListener('click', closePopup);
+
+            // Close on overlay background click
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay) closePopup();
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closePopup();
+            });
+
+            // Close popup when CTA is clicked (let page scroll to projects)
+            exploreBtn.addEventListener('click', closePopup);
+        })();
+
     </script>
 </body>
 
 </html>
-
